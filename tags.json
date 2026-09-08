@@ -1,0 +1,17 @@
+{
+  "AB123": {
+    "owner": "Bhupesh",
+    "item": "Water Bottle",
+    "phone": "919999999999"
+  },
+  "CD456": {
+    "owner": "Bhupesh",
+    "item": "College ID Card",
+    "phone": "919999999999"
+  },
+  "EF789": {
+    "owner": "Bhupesh",
+    "item": "Notebook",
+    "phone": "919999999999"
+  }
+}
