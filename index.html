@@ -3,11 +3,15 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 <title>FindMi — found something?</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
+
   :root {
     --paper: #f6f4ef;
     --ink: #1b2430;
@@ -21,17 +25,30 @@
     --radius: 14px;
   }
 
-  * { box-sizing: border-box; }
+  * {
+    box-sizing: border-box;
+  }
 
   @media (prefers-reduced-motion: no-preference) {
-    .ticket { animation: rise 0.5s ease-out; }
-  }
-  @keyframes rise {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    .ticket {
+      animation: rise 0.5s ease-out;
+    }
   }
 
-  html, body {
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  html,
+  body {
     margin: 0;
     padding: 0;
     background: var(--paper);
@@ -123,6 +140,7 @@
     padding: 10px 0;
     border-top: 1px solid var(--line);
   }
+
   .ticket__item-row:last-of-type {
     border-bottom: 1px solid var(--line);
     margin-bottom: 24px;
@@ -157,13 +175,68 @@
     cursor: pointer;
     transition: background 0.15s ease;
   }
-  .cta:hover { background: var(--go-deep); }
+
+  .cta:hover {
+    background: var(--go-deep);
+  }
+
   .cta:focus-visible {
     outline: 2px solid var(--navy);
     outline-offset: 2px;
   }
 
-  .cta svg { flex-shrink: 0; }
+  .cta svg {
+    flex-shrink: 0;
+  }
+
+  /* FIND FORM */
+
+  .found-form {
+    margin-top: 14px;
+    padding: 16px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    text-align: left;
+  }
+
+  .found-form label {
+    display: block;
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin: 10px 0 6px;
+  }
+
+  .found-form label:first-child {
+    margin-top: 0;
+  }
+
+  .found-form input,
+  .found-form textarea {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: white;
+    color: var(--ink);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    outline: none;
+  }
+
+  .found-form input:focus,
+  .found-form textarea:focus {
+    border-color: var(--navy);
+  }
+
+  .found-form textarea {
+    resize: vertical;
+    margin-bottom: 12px;
+  }
+
+  .found-form .cta {
+    margin-top: 4px;
+  }
 
   .ticket__footer {
     padding: 14px 22px 18px;
@@ -176,105 +249,348 @@
     text-align: center;
     padding: 34px 24px;
   }
+
   .state--empty .ticket__eyebrow-free {
     margin-bottom: 6px;
   }
+
   .state--empty p.help {
     font-size: 13px;
     color: var(--ink-soft);
     line-height: 1.5;
     margin: 10px 0 0;
   }
+
 </style>
 </head>
+
 <body>
 
   <div class="ticket" id="ticket">
+
     <div class="ticket__header">
-      <span class="ticket__brand">FindMi</span>
-      <span class="ticket__id" id="tagIdLabel">···</span>
+
+      <span class="ticket__brand">
+        FindMi
+      </span>
+
+      <span class="ticket__id" id="tagIdLabel">
+        ···
+      </span>
+
     </div>
+
     <div class="perforation"></div>
-    <div id="ticketBody"><!-- filled by JS --></div>
+
+    <div id="ticketBody">
+      <!-- filled by JavaScript -->
+    </div>
+
   </div>
 
+
 <script>
+
   async function loadTag() {
+
     const params = new URLSearchParams(window.location.search);
+
     const id = params.get('id');
+
     const ticket = document.getElementById('ticket');
+
     const body = document.getElementById('ticketBody');
+
     const idLabel = document.getElementById('tagIdLabel');
 
+
     if (!id) {
+
       renderEmpty(body, ticket, idLabel, null);
+
       return;
+
     }
+
 
     idLabel.textContent = '#' + id;
 
+
     try {
-      const res = await fetch('./tags.json', { cache: 'no-store' });
+
+      const res = await fetch('./tags.json', {
+        cache: 'no-store'
+      });
+
       const tags = await res.json();
+
       const tag = tags[id];
 
+
       if (!tag) {
+
         renderEmpty(body, ticket, idLabel, id);
+
         return;
+
       }
 
+
       renderFound(body, tag, id);
+
+
     } catch (err) {
+
       renderEmpty(body, ticket, idLabel, id);
+
     }
+
   }
+
 
   function renderFound(body, tag, id) {
-    const message = `Hi ${tag.owner}! I found your ${tag.item} (tag #${id}) on campus. Let's arrange to get it back to you.`;
-    const waLink = `https://wa.me/${tag.phone}?text=${encodeURIComponent(message)}`;
 
     body.innerHTML = `
+
       <div class="ticket__body">
-        <p class="ticket__eyebrow-free">Found something? This ${escapeHtml(tag.item)} belongs to <span class="owner">${escapeHtml(tag.owner)}</span>.</p>
+
+        <p class="ticket__eyebrow-free">
+
+          Found something?
+
+          This ${escapeHtml(tag.item)}
+          belongs to
+
+          <span class="owner">
+            ${escapeHtml(tag.owner)}
+          </span>.
+
+        </p>
+
 
         <div class="ticket__item-row">
-          <span class="ticket__item-label">Item</span>
-          <span class="ticket__item-value">${escapeHtml(tag.item)}</span>
-        </div>
-        <div class="ticket__item-row">
-          <span class="ticket__item-label">Tag ID</span>
-          <span class="ticket__item-value">${escapeHtml(id)}</span>
+
+          <span class="ticket__item-label">
+            Item
+          </span>
+
+          <span class="ticket__item-value">
+            ${escapeHtml(tag.item)}
+          </span>
+
         </div>
 
-        <a class="cta" href="${waLink}" target="_blank" rel="noopener">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M4 20l1.6-4.8A8 8 0 1 1 9 18.6L4 20z" stroke="white" stroke-width="1.7" stroke-linejoin="round"/>
-          </svg>
-          Notify ${escapeHtml(tag.owner)} on WhatsApp
-        </a>
+
+        <div class="ticket__item-row">
+
+          <span class="ticket__item-label">
+            Tag ID
+          </span>
+
+          <span class="ticket__item-value">
+            ${escapeHtml(id)}
+          </span>
+
+        </div>
+
+
+        <!-- I FOUND THIS BUTTON -->
+
+        <button
+          class="cta"
+          type="button"
+          onclick="showFoundForm()"
+        >
+          I Found This
+        </button>
+
+
+        <!-- FINDER FORM -->
+
+        <div
+          id="foundForm"
+          class="found-form"
+          style="display:none;"
+        >
+
+          <label for="foundLocation">
+            Where did you find it?
+          </label>
+
+          <input
+            id="foundLocation"
+            type="text"
+            placeholder="e.g. Library, Canteen, Classroom"
+          />
+
+
+          <label for="foundMessage">
+            Message (optional)
+          </label>
+
+          <textarea
+            id="foundMessage"
+            rows="3"
+            placeholder="Add a message for the owner..."
+          ></textarea>
+
+
+          <button
+            class="cta"
+            type="button"
+            onclick="notifyOwner(
+              '${escapeJs(tag.phone)}',
+              '${escapeJs(tag.owner)}',
+              '${escapeJs(tag.item)}',
+              '${escapeJs(id)}'
+            )"
+          >
+            Notify ${escapeHtml(tag.owner)}
+          </button>
+
+        </div>
+
       </div>
-      <div class="ticket__footer">Scanned via a FindMi tag on Wilson College campus.</div>
+
+
+      <div class="ticket__footer">
+
+        Scanned via a FindMi tag on
+        Wilson College campus.
+
+      </div>
+
     `;
+
   }
+
+
+  function showFoundForm() {
+
+    const form = document.getElementById('foundForm');
+
+    if (!form) {
+      return;
+    }
+
+    form.style.display = 'block';
+
+
+    const locationInput =
+      document.getElementById('foundLocation');
+
+    if (locationInput) {
+
+      locationInput.focus();
+
+    }
+
+  }
+
+
+  function notifyOwner(phone, owner, item, id) {
+
+    const location =
+      document.getElementById('foundLocation').value.trim();
+
+    const extraMessage =
+      document.getElementById('foundMessage').value.trim();
+
+
+    if (!location) {
+
+      alert('Please tell us where you found the item.');
+
+      return;
+
+    }
+
+
+    let message =
+      `Hi ${owner}! I found your ${item} (tag #${id}).\n\n` +
+      `📍 Found at: ${location}`;
+
+
+    if (extraMessage) {
+
+      message +=
+        `\n\nMessage: ${extraMessage}`;
+
+    }
+
+
+    message +=
+      `\n\nLet's arrange to get it back to you.`;
+
+
+    const waLink =
+      `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+
+    window.open(waLink, '_blank');
+
+  }
+
 
   function renderEmpty(body, ticket, idLabel, id) {
-    idLabel.textContent = id ? '#' + id : '—';
+
+    idLabel.textContent =
+      id ? '#' + id : '—';
+
+
     ticket.classList.add('state--empty');
+
+
     body.innerHTML = `
+
       <div class="ticket__body">
-        <p class="ticket__eyebrow-free">This tag isn't linked yet.</p>
-        <p class="help">If you scanned this from a sticker, the owner may still be setting it up. Ask around campus, or check with the FindMi stall.</p>
+
+        <p class="ticket__eyebrow-free">
+          This tag isn't linked yet.
+        </p>
+
+        <p class="help">
+
+          If you scanned this from a sticker,
+          the owner may still be setting it up.
+
+          Ask around campus, or check with
+          the FindMi stall.
+
+        </p>
+
       </div>
+
     `;
+
   }
+
 
   function escapeHtml(str) {
-    const div = document.createElement('div');
+
+    const div =
+      document.createElement('div');
+
     div.textContent = str;
+
     return div.innerHTML;
+
   }
 
+
+  function escapeJs(str) {
+
+    return String(str)
+      .replace(/\\/g, '\\\\')
+      .replace(/'/g, "\\'")
+      .replace(/\n/g, '\\n')
+      .replace(/\r/g, '\\r');
+
+  }
+
+
   loadTag();
+
 </script>
 
 </body>
