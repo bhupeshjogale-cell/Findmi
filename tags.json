@@ -1,17 +1,14 @@
 {
   "AB123": {
     "owner": "Bhupesh",
-    "item": "Water Bottle",
-    "phone": "919999999999"
+    "item": "Water Bottle"
   },
   "CD456": {
-    "owner": "Bhupesh",
-    "item": "College ID Card",
-    "phone": "919999999999"
+    "owner": "Avishkar Kharat",
+    "item": "College ID Card"
   },
   "EF789": {
-    "owner": "Bhupesh",
-    "item": "Notebook",
-    "phone": "919999999999"
+    "owner": "Vedant",
+    "item": "Notebook"
   }
 }
