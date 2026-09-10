@@ -1,595 +1,1312 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FindMi — found something?</title>
+<title>FindMi — Lost & Found</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link
+  href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+  rel="stylesheet"
+>
 
 <style>
 
-  :root {
-    --paper: #f6f4ef;
-    --ink: #1b2430;
-    --ink-soft: #5b6472;
-    --line: #d9d4c8;
-    --navy: #1f3a52;
-    --navy-deep: #16293a;
-    --gold: #c9a24b;
-    --go: #128c4a;
-    --go-deep: #0f7a40;
-    --radius: 14px;
+:root {
+  --navy: #162b3d;
+  --navy-dark: #0f1e2b;
+  --blue: #203f59;
+
+  --gold: #e0ad24;
+  --gold-soft: #f4e8bd;
+
+  --green: #128c4a;
+  --green-dark: #0e713d;
+
+  --cream: #f7f5ef;
+  --white: #fffefa;
+
+  --text: #18222d;
+  --muted: #6d7580;
+
+  --border: #e3dfd4;
+
+  --radius-lg: 22px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+}
+
+
+/* =========================
+   RESET
+========================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+
+  background:
+    radial-gradient(
+      circle at 50% -10%,
+      rgba(224,173,36,0.08),
+      transparent 35%
+    ),
+    var(--cream);
+
+  color: var(--text);
+
+  font-family: "DM Sans", sans-serif;
+
+  display: flex;
+  justify-content: center;
+
+  padding: 20px 16px 30px;
+}
+
+
+/* =========================
+   PAGE
+========================= */
+
+.page {
+  width: 100%;
+  max-width: 430px;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 8px 4px 20px;
+}
+
+
+/* Logo */
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  text-decoration: none;
+  color: var(--navy);
+}
+
+
+/* Tag logo */
+
+.logo-tag {
+  width: 38px;
+  height: 32px;
+
+  background: var(--blue);
+
+  clip-path: polygon(
+    0 50%,
+    32% 0,
+    100% 0,
+    100% 100%,
+    32% 100%
+  );
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  padding-right: 7px;
+}
+
+
+.logo-tag::after {
+  content: "";
+
+  width: 11px;
+  height: 11px;
+
+  border: 3px solid var(--gold);
+
+  border-radius: 50%;
+}
+
+
+.logo-name {
+  font-family: "Space Grotesk", sans-serif;
+
+  font-size: 24px;
+  font-weight: 700;
+
+  letter-spacing: -0.8px;
+}
+
+
+.header-tag {
+  font-family: "Space Grotesk", sans-serif;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  color: var(--muted);
+
+  background: rgba(255,255,255,0.65);
+
+  border: 1px solid var(--border);
+
+  padding: 7px 10px;
+
+  border-radius: 999px;
+}
+
+
+/* =========================
+   MAIN CARD
+========================= */
+
+.card {
+  background: var(--white);
+
+  border: 1px solid var(--border);
+
+  border-radius: var(--radius-lg);
+
+  overflow: hidden;
+
+  box-shadow:
+    0 10px 35px rgba(15,30,43,0.07);
+
+  animation: cardEnter 0.45s ease-out;
+}
+
+
+@keyframes cardEnter {
+
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
 
-  * {
-    box-sizing: border-box;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 
-  @media (prefers-reduced-motion: no-preference) {
-    .ticket {
-      animation: rise 0.5s ease-out;
-    }
+}
+
+
+/* =========================
+   CARD TOP
+========================= */
+
+.card-top {
+  background: var(--navy);
+
+  color: white;
+
+  padding: 26px 24px 24px;
+
+  position: relative;
+}
+
+
+/* Decorative circle */
+
+.card-top::after {
+  content: "";
+
+  position: absolute;
+
+  width: 130px;
+  height: 130px;
+
+  border: 1px solid rgba(224,173,36,0.15);
+
+  border-radius: 50%;
+
+  right: -55px;
+  top: -65px;
+}
+
+
+.status {
+  display: inline-flex;
+
+  align-items: center;
+  gap: 7px;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  letter-spacing: 0.04em;
+
+  color: #f4e8bd;
+
+  text-transform: uppercase;
+
+  margin-bottom: 15px;
+}
+
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+
+  background: var(--gold);
+
+  border-radius: 50%;
+}
+
+
+.card-heading {
+  margin: 0;
+
+  font-family: "Space Grotesk", sans-serif;
+
+  font-size: 27px;
+  line-height: 1.12;
+
+  letter-spacing: -0.7px;
+}
+
+
+.card-subheading {
+  margin: 10px 0 0;
+
+  color: rgba(255,255,255,0.68);
+
+  font-size: 14px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================
+   CARD BODY
+========================= */
+
+.card-body {
+  padding: 24px;
+}
+
+
+/* Item display */
+
+.item-box {
+
+  background: var(--cream);
+
+  border: 1px solid var(--border);
+
+  border-radius: var(--radius-md);
+
+  padding: 18px;
+
+  margin-bottom: 20px;
+}
+
+
+.item-label {
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.1em;
+
+  text-transform: uppercase;
+
+  color: var(--muted);
+
+  margin-bottom: 6px;
+}
+
+
+.item-name {
+
+  font-family: "Space Grotesk", sans-serif;
+
+  font-size: 22px;
+
+  font-weight: 600;
+
+  color: var(--navy);
+
+  line-height: 1.2;
+
+  word-break: break-word;
+}
+
+
+.owner-row {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-top: 17px;
+
+  padding-top: 15px;
+
+  border-top: 1px solid var(--border);
+}
+
+
+.owner-label {
+
+  font-size: 12px;
+
+  color: var(--muted);
+}
+
+
+.owner-name {
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  color: var(--text);
+}
+
+
+/* =========================
+   TAG INFO
+========================= */
+
+.tag-info {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 0 2px 20px;
+}
+
+
+.tag-info-label {
+
+  color: var(--muted);
+
+  font-size: 12px;
+}
+
+
+.tag-info-value {
+
+  font-family: "Space Grotesk", sans-serif;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  color: var(--navy);
+
+  background: var(--gold-soft);
+
+  padding: 5px 9px;
+
+  border-radius: 6px;
+}
+
+
+/* =========================
+   CTA
+========================= */
+
+.cta {
+
+  width: 100%;
+
+  border: none;
+
+  border-radius: var(--radius-md);
+
+  padding: 15px 18px;
+
+  background: var(--green);
+
+  color: white;
+
+  font-family: "DM Sans", sans-serif;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 9px;
+
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+
+.cta:hover {
+
+  background: var(--green-dark);
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 6px 18px rgba(18,140,74,0.18);
+}
+
+
+.cta:active {
+
+  transform: translateY(0);
+
+}
+
+
+.cta-arrow {
+
+  font-size: 18px;
+
+  line-height: 0;
+}
+
+
+/* =========================
+   FINDER FORM
+========================= */
+
+.found-form {
+
+  display: none;
+
+  margin-top: 14px;
+
+  padding: 18px;
+
+  background: var(--cream);
+
+  border: 1px solid var(--border);
+
+  border-radius: var(--radius-md);
+
+  animation: formEnter 0.25s ease-out;
+}
+
+
+@keyframes formEnter {
+
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
   }
 
-  @keyframes rise {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 
-  html,
+}
+
+
+.form-title {
+
+  font-family: "Space Grotesk", sans-serif;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  color: var(--navy);
+
+  margin: 0 0 15px;
+}
+
+
+.form-group {
+
+  margin-bottom: 14px;
+}
+
+
+.form-group label {
+
+  display: block;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  color: var(--muted);
+
+  margin-bottom: 6px;
+}
+
+
+.form-group input,
+.form-group textarea {
+
+  width: 100%;
+
+  border: 1px solid var(--border);
+
+  border-radius: var(--radius-sm);
+
+  background: white;
+
+  color: var(--text);
+
+  padding: 11px 12px;
+
+  font-family: "DM Sans", sans-serif;
+
+  font-size: 13px;
+
+  outline: none;
+}
+
+
+.form-group input:focus,
+.form-group textarea:focus {
+
+  border-color: var(--navy);
+
+  box-shadow:
+    0 0 0 3px rgba(22,43,61,0.07);
+}
+
+
+.form-group textarea {
+
+  resize: vertical;
+
+  min-height: 80px;
+}
+
+
+.form-button {
+
+  margin-top: 3px;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+
+  text-align: center;
+
+  padding: 17px 8px 0;
+
+  color: var(--muted);
+
+  font-size: 11px;
+
+  line-height: 1.5;
+}
+
+
+.footer strong {
+
+  color: var(--navy);
+
+  font-weight: 600;
+}
+
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.empty-card {
+
+  text-align: center;
+
+  padding: 45px 25px;
+}
+
+
+.empty-icon {
+
+  width: 58px;
+  height: 58px;
+
+  margin: 0 auto 18px;
+
+  border-radius: 50%;
+
+  background: var(--gold-soft);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: var(--navy);
+
+  font-size: 25px;
+}
+
+
+.empty-title {
+
+  font-family: "Space Grotesk", sans-serif;
+
+  font-size: 22px;
+
+  margin: 0 0 8px;
+}
+
+
+.empty-text {
+
+  margin: 0;
+
+  color: var(--muted);
+
+  font-size: 13px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 360px) {
+
   body {
-    margin: 0;
-    padding: 0;
-    background: var(--paper);
-    color: var(--ink);
-    font-family: 'Space Grotesk', sans-serif;
-    min-height: 100vh;
+    padding: 15px 12px 25px;
   }
 
-  body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
+  .card-heading {
+    font-size: 24px;
   }
 
-  .ticket {
-    width: 100%;
-    max-width: 380px;
-    background: #fffdf9;
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    overflow: hidden;
-    box-shadow: 0 1px 2px rgba(27, 36, 48, 0.06);
+  .card-body {
+    padding: 20px;
   }
 
-  .ticket__header {
-    background: var(--navy);
-    color: #fff;
-    padding: 16px 18px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-  }
+}
 
-  .ticket__header::before {
-    content: "";
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--paper);
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.25);
-  }
 
-  .ticket__brand {
-    font-weight: 600;
-    font-size: 15px;
-    letter-spacing: 0.01em;
-    margin-left: 22px;
-  }
+/* =========================
+   ACCESSIBILITY
+========================= */
 
-  .ticket__id {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    color: var(--gold);
-    letter-spacing: 0.04em;
-  }
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
 
-  .perforation {
-    height: 0;
-    border-top: 2px dashed var(--line);
-    margin: 0;
-  }
+  outline: 2px solid var(--gold);
 
-  .ticket__body {
-    padding: 28px 22px 24px;
-    text-align: left;
-  }
-
-  .ticket__eyebrow-free {
-    font-size: 17px;
-    line-height: 1.45;
-    margin: 0 0 22px;
-    color: var(--ink);
-  }
-
-  .ticket__eyebrow-free .owner {
-    font-weight: 600;
-  }
-
-  .ticket__item-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    padding: 10px 0;
-    border-top: 1px solid var(--line);
-  }
-
-  .ticket__item-row:last-of-type {
-    border-bottom: 1px solid var(--line);
-    margin-bottom: 24px;
-  }
-
-  .ticket__item-label {
-    font-size: 12px;
-    color: var(--ink-soft);
-  }
-
-  .ticket__item-value {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    color: var(--ink);
-  }
-
-  .cta {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: 100%;
-    padding: 14px 16px;
-    background: var(--go);
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    text-decoration: none;
-    cursor: pointer;
-    transition: background 0.15s ease;
-  }
-
-  .cta:hover {
-    background: var(--go-deep);
-  }
-
-  .cta:focus-visible {
-    outline: 2px solid var(--navy);
-    outline-offset: 2px;
-  }
-
-  .cta svg {
-    flex-shrink: 0;
-  }
-
-  /* FIND FORM */
-
-  .found-form {
-    margin-top: 14px;
-    padding: 16px;
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    text-align: left;
-  }
-
-  .found-form label {
-    display: block;
-    font-size: 12px;
-    color: var(--ink-soft);
-    margin: 10px 0 6px;
-  }
-
-  .found-form label:first-child {
-    margin-top: 0;
-  }
-
-  .found-form input,
-  .found-form textarea {
-    width: 100%;
-    padding: 11px 12px;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    background: white;
-    color: var(--ink);
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 14px;
-    outline: none;
-  }
-
-  .found-form input:focus,
-  .found-form textarea:focus {
-    border-color: var(--navy);
-  }
-
-  .found-form textarea {
-    resize: vertical;
-    margin-bottom: 12px;
-  }
-
-  .found-form .cta {
-    margin-top: 4px;
-  }
-
-  .ticket__footer {
-    padding: 14px 22px 18px;
-    font-size: 12px;
-    color: var(--ink-soft);
-    text-align: center;
-  }
-
-  .state--empty .ticket__body {
-    text-align: center;
-    padding: 34px 24px;
-  }
-
-  .state--empty .ticket__eyebrow-free {
-    margin-bottom: 6px;
-  }
-
-  .state--empty p.help {
-    font-size: 13px;
-    color: var(--ink-soft);
-    line-height: 1.5;
-    margin: 10px 0 0;
-  }
+  outline-offset: 2px;
+}
 
 </style>
 </head>
 
+
 <body>
 
-  <div class="ticket" id="ticket">
+<div class="page">
 
-    <div class="ticket__header">
 
-      <span class="ticket__brand">
+  <!-- =====================
+       HEADER
+  ====================== -->
+
+  <header class="header">
+
+    <div class="logo">
+
+      <div class="logo-tag"></div>
+
+      <span class="logo-name">
         FindMi
       </span>
 
-      <span class="ticket__id" id="tagIdLabel">
-        ···
-      </span>
-
     </div>
 
-    <div class="perforation"></div>
+
+    <div
+      class="header-tag"
+      id="headerTag"
+    >
+      SCANNING...
+    </div>
+
+  </header>
+
+
+
+  <!-- =====================
+       MAIN CARD
+  ====================== -->
+
+  <main
+    class="card"
+    id="ticket"
+  >
 
     <div id="ticketBody">
-      <!-- filled by JavaScript -->
+
+      <!-- JavaScript fills this -->
+
     </div>
 
-  </div>
+  </main>
+
+
+
+  <!-- =====================
+       FOOTER
+  ====================== -->
+
+  <footer class="footer">
+
+    <strong>FindMi</strong> · Lost & Found made simple
+
+    <br>
+
+    Scanned from a FindMi tag
+
+  </footer>
+
+
+</div>
+
 
 
 <script>
 
-  async function loadTag() {
 
-    const params = new URLSearchParams(window.location.search);
+/* =================================
+   LOAD TAG
+================================= */
 
-    const id = params.get('id');
-
-    const ticket = document.getElementById('ticket');
-
-    const body = document.getElementById('ticketBody');
-
-    const idLabel = document.getElementById('tagIdLabel');
+async function loadTag() {
 
 
-    if (!id) {
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
 
-      renderEmpty(body, ticket, idLabel, null);
+
+  const id =
+    params.get("id");
+
+
+  const body =
+    document.getElementById(
+      "ticketBody"
+    );
+
+
+  const headerTag =
+    document.getElementById(
+      "headerTag"
+    );
+
+
+  if (!id) {
+
+    headerTag.textContent =
+      "NO TAG ID";
+
+    renderEmpty(body);
+
+    return;
+
+  }
+
+
+  headerTag.textContent =
+    "#" + id;
+
+
+  try {
+
+
+    const response =
+      await fetch(
+        "./tags.json",
+        {
+          cache: "no-store"
+        }
+      );
+
+
+    const tags =
+      await response.json();
+
+
+    const tag =
+      tags[id];
+
+
+    if (!tag) {
+
+      renderEmpty(body);
 
       return;
 
     }
 
 
-    idLabel.textContent = '#' + id;
+    renderFound(
+      body,
+      tag,
+      id
+    );
 
 
-    try {
+  } catch (error) {
 
-      const res = await fetch('./tags.json', {
-        cache: 'no-store'
-      });
-
-      const tags = await res.json();
-
-      const tag = tags[id];
-
-
-      if (!tag) {
-
-        renderEmpty(body, ticket, idLabel, id);
-
-        return;
-
-      }
-
-
-      renderFound(body, tag, id);
-
-
-    } catch (err) {
-
-      renderEmpty(body, ticket, idLabel, id);
-
-    }
+    renderEmpty(body);
 
   }
 
+}
 
-  function renderFound(body, tag, id) {
 
-    body.innerHTML = `
 
-      <div class="ticket__body">
+/* =================================
+   FOUND ITEM
+================================= */
 
-        <p class="ticket__eyebrow-free">
+function renderFound(
+  body,
+  tag,
+  id
+) {
 
-          Found something?
 
-          This ${escapeHtml(tag.item)}
-          belongs to
+  body.innerHTML = `
 
-          <span class="owner">
+    <div class="card-top">
+
+      <div class="status">
+
+        <span class="status-dot"></span>
+
+        FindMi tag detected
+
+      </div>
+
+
+      <h1 class="card-heading">
+
+        Found something?
+
+      </h1>
+
+
+      <p class="card-subheading">
+
+        This item has been registered with FindMi.
+        You can help return it to its owner.
+
+      </p>
+
+    </div>
+
+
+    <div class="card-body">
+
+
+      <div class="item-box">
+
+
+        <div class="item-label">
+
+          Item
+
+        </div>
+
+
+        <div class="item-name">
+
+          ${escapeHtml(tag.item)}
+
+        </div>
+
+
+        <div class="owner-row">
+
+          <span class="owner-label">
+
+            Registered to
+
+          </span>
+
+
+          <span class="owner-name">
+
             ${escapeHtml(tag.owner)}
-          </span>.
+
+          </span>
+
+        </div>
+
+
+      </div>
+
+
+      <div class="tag-info">
+
+        <span class="tag-info-label">
+
+          FindMi Tag ID
+
+        </span>
+
+
+        <span class="tag-info-value">
+
+          #${escapeHtml(id)}
+
+        </span>
+
+      </div>
+
+
+      <button
+        class="cta"
+        type="button"
+        onclick="showFoundForm()"
+      >
+
+        I Found This
+
+        <span class="cta-arrow">
+          →
+        </span>
+
+      </button>
+
+
+      <div
+        id="foundForm"
+        class="found-form"
+      >
+
+
+        <p class="form-title">
+
+          Help return this item
 
         </p>
 
 
-        <div class="ticket__item-row">
-
-          <span class="ticket__item-label">
-            Item
-          </span>
-
-          <span class="ticket__item-value">
-            ${escapeHtml(tag.item)}
-          </span>
-
-        </div>
-
-
-        <div class="ticket__item-row">
-
-          <span class="ticket__item-label">
-            Tag ID
-          </span>
-
-          <span class="ticket__item-value">
-            ${escapeHtml(id)}
-          </span>
-
-        </div>
-
-
-        <!-- I FOUND THIS BUTTON -->
-
-        <button
-          class="cta"
-          type="button"
-          onclick="showFoundForm()"
-        >
-          I Found This
-        </button>
-
-
-        <!-- FINDER FORM -->
-
-        <div
-          id="foundForm"
-          class="found-form"
-          style="display:none;"
-        >
+        <div class="form-group">
 
           <label for="foundLocation">
+
             Where did you find it?
+
           </label>
+
 
           <input
             id="foundLocation"
             type="text"
-            placeholder="e.g. Library, Canteen, Classroom"
-          />
-
-
-          <label for="foundMessage">
-            Message (optional)
-          </label>
-
-          <textarea
-            id="foundMessage"
-            rows="3"
-            placeholder="Add a message for the owner..."
-          ></textarea>
-
-
-          <button
-            class="cta"
-            type="button"
-            onclick="notifyOwner(
-              '${escapeJs(tag.phone)}',
-              '${escapeJs(tag.owner)}',
-              '${escapeJs(tag.item)}',
-              '${escapeJs(id)}'
-            )"
+            placeholder="Library, canteen, classroom..."
           >
-            Notify ${escapeHtml(tag.owner)}
-          </button>
 
         </div>
 
+
+        <div class="form-group">
+
+          <label for="foundMessage">
+
+            Message (optional)
+
+          </label>
+
+
+          <textarea
+            id="foundMessage"
+            placeholder="Add a message for the owner..."
+          ></textarea>
+
+        </div>
+
+
+        <button
+          class="cta form-button"
+          type="button"
+          onclick="notifyOwner(
+            '${escapeJs(tag.phone)}',
+            '${escapeJs(tag.owner)}',
+            '${escapeJs(tag.item)}',
+            '${escapeJs(id)}'
+          )"
+        >
+
+          Notify ${escapeHtml(tag.owner)}
+
+          <span class="cta-arrow">
+            →
+          </span>
+
+        </button>
+
+
       </div>
 
 
-      <div class="ticket__footer">
+    </div>
 
-        Scanned via a FindMi tag on
-        Wilson College campus.
+  `;
 
-      </div>
+}
 
-    `;
+
+
+/* =================================
+   SHOW FORM
+================================= */
+
+function showFoundForm() {
+
+
+  const form =
+    document.getElementById(
+      "foundForm"
+    );
+
+
+  if (!form) {
+    return;
+  }
+
+
+  form.style.display =
+    "block";
+
+
+  const input =
+    document.getElementById(
+      "foundLocation"
+    );
+
+
+  if (input) {
+
+    input.focus();
+
+  }
+
+}
+
+
+
+/* =================================
+   WHATSAPP NOTIFICATION
+================================= */
+
+function notifyOwner(
+  phone,
+  owner,
+  item,
+  id
+) {
+
+
+  const location =
+    document
+      .getElementById(
+        "foundLocation"
+      )
+      .value
+      .trim();
+
+
+  const extraMessage =
+    document
+      .getElementById(
+        "foundMessage"
+      )
+      .value
+      .trim();
+
+
+  if (!location) {
+
+    alert(
+      "Please tell us where you found the item."
+    );
+
+    return;
 
   }
 
 
-  function showFoundForm() {
+  let message =
 
-    const form = document.getElementById('foundForm');
+    `Hi ${owner}! I found your ${item} (FindMi tag #${id}).\n\n` +
 
-    if (!form) {
-      return;
-    }
-
-    form.style.display = 'block';
+    `📍 Found at: ${location}`;
 
 
-    const locationInput =
-      document.getElementById('foundLocation');
-
-    if (locationInput) {
-
-      locationInput.focus();
-
-    }
-
-  }
-
-
-  function notifyOwner(phone, owner, item, id) {
-
-    const location =
-      document.getElementById('foundLocation').value.trim();
-
-    const extraMessage =
-      document.getElementById('foundMessage').value.trim();
-
-
-    if (!location) {
-
-      alert('Please tell us where you found the item.');
-
-      return;
-
-    }
-
-
-    let message =
-      `Hi ${owner}! I found your ${item} (tag #${id}).\n\n` +
-      `📍 Found at: ${location}`;
-
-
-    if (extraMessage) {
-
-      message +=
-        `\n\nMessage: ${extraMessage}`;
-
-    }
-
+  if (extraMessage) {
 
     message +=
-      `\n\nLet's arrange to get it back to you.`;
-
-
-    const waLink =
-      `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-
-
-    window.open(waLink, '_blank');
+      `\n\nMessage: ${extraMessage}`;
 
   }
 
 
-  function renderEmpty(body, ticket, idLabel, id) {
+  message +=
 
-    idLabel.textContent =
-      id ? '#' + id : '—';
-
-
-    ticket.classList.add('state--empty');
+    `\n\nLet's arrange to get it back to you.`;
 
 
-    body.innerHTML = `
+  const whatsappUrl =
 
-      <div class="ticket__body">
+    `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
-        <p class="ticket__eyebrow-free">
-          This tag isn't linked yet.
-        </p>
 
-        <p class="help">
+  window.open(
+    whatsappUrl,
+    "_blank"
+  );
 
-          If you scanned this from a sticker,
-          the owner may still be setting it up.
+}
 
-          Ask around campus, or check with
-          the FindMi stall.
 
-        </p>
+
+/* =================================
+   EMPTY STATE
+================================= */
+
+function renderEmpty(body) {
+
+
+  body.innerHTML = `
+
+    <div class="empty-card">
+
+      <div class="empty-icon">
+
+        ?
 
       </div>
 
-    `;
 
-  }
+      <h1 class="empty-title">
 
+        Tag not found
 
-  function escapeHtml(str) {
-
-    const div =
-      document.createElement('div');
-
-    div.textContent = str;
-
-    return div.innerHTML;
-
-  }
+      </h1>
 
 
-  function escapeJs(str) {
+      <p class="empty-text">
 
-    return String(str)
-      .replace(/\\/g, '\\\\')
-      .replace(/'/g, "\\'")
-      .replace(/\n/g, '\\n')
-      .replace(/\r/g, '\\r');
+        This FindMi tag isn't linked to an item yet.
 
-  }
+        If you scanned a physical FindMi sticker,
+        the owner may still be setting it up.
+
+      </p>
+
+    </div>
+
+  `;
+
+}
 
 
-  loadTag();
+
+/* =================================
+   SECURITY HELPERS
+================================= */
+
+function escapeHtml(str) {
+
+
+  const div =
+    document.createElement(
+      "div"
+    );
+
+
+  div.textContent =
+    str;
+
+
+  return div.innerHTML;
+
+}
+
+
+function escapeJs(str) {
+
+
+  return String(str)
+
+    .replace(
+      /\\/g,
+      "\\\\"
+    )
+
+    .replace(
+      /'/g,
+      "\\'"
+    )
+
+    .replace(
+      /\n/g,
+      "\\n"
+    )
+
+    .replace(
+      /\r/g,
+      "\\r"
+    );
+
+}
+
+
+
+/* =================================
+   START
+================================= */
+
+loadTag();
 
 </script>
 
