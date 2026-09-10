@@ -1,17 +1,37 @@
 {
   "AB123": {
-    "owner": "Bhupesh Jogale",
+    "owner": "Bhupesh",
     "item": "Water Bottle",
     "phone": "917738535593"
   },
+
   "CD456": {
     "owner": "Avishkar Kharat",
     "item": "College ID Card",
     "phone": "917387340147"
   },
+
   "EF789": {
     "owner": "Vedant",
     "item": "Notebook",
-    "phone": "+919152901850"
+    "phone": "919152901850"
+  },
+
+  "GH012": {
+    "owner": "Bhupesh Jogale",
+    "item": "Earphones",
+    "phone": "917738535593"
+  },
+
+  "IJ345": {
+    "owner": "Avishkar Kharat",
+    "item": "Backpack",
+    "phone":  "917387340147"
+  },
+
+  "KL678": {
+    "owner": "Vedant",
+    "item": "Calculator",
+    "phone": "919152901850"
   }
 }
